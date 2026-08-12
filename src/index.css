@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-bg text-secondary font-sans; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white font-semibold rounded-xl h-10
+           px-5 flex items-center justify-center gap-2
+           hover:bg-primary-dark transition-colors disabled:opacity-50;
+  }
+  .btn-secondary {
+    @apply bg-secondary text-white font-semibold rounded-xl h-10
+           px-5 flex items-center justify-center gap-2
+           hover:bg-secondary-light transition-colors disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply text-secondary font-medium rounded-xl h-10
+           px-4 flex items-center justify-center gap-2
+           hover:bg-gray-100 transition-colors;
+  }
+  .btn-danger {
+    @apply bg-danger text-white font-semibold rounded-xl h-10
+           px-5 flex items-center justify-center gap-2
+           hover:opacity-90 transition-colors disabled:opacity-50;
+  }
+  .card { @apply bg-surface rounded-2xl shadow-card p-5 border border-gray-100; }
+  .input {
+    @apply w-full border border-gray-200 rounded-xl px-4 h-10
+           text-secondary placeholder-gray-400 bg-surface
+           focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
+           transition-colors;
+  }
+  .label { @apply block text-sm font-medium text-secondary mb-1; }
+  .table-th { @apply text-left text-xs font-semibold text-gray-400 uppercase tracking-wide px-4 py-3; }
+  .table-td { @apply px-4 py-3 text-sm border-t border-gray-100; }
+}

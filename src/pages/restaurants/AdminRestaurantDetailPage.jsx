@@ -22,7 +22,7 @@ import useAdminAuthStore from '../../stores/adminAuthStore'
 import { useAdminRestaurant, useUpdateRestaurant, useSetRestaurantActive, useDeleteRestaurant, useUpdateRestaurantUser } from '../../hooks/useAdminRestaurants'
 import {
   useConfirmSubscriptionPayment, useChargeSubscription, useSuspendSubscription, useCancelSubscription,
-  useUpdateSubscriptionDates, useLiberateSubscription, useRestaurantBillingHistory,
+  useUpdateSubscriptionDates, useLiberateSubscription, useRestaurantBillingHistory, useAdjustPendingBillingAmount,
 } from '../../hooks/useAdminSubscriptions'
 import { useAdminPlans } from '../../hooks/useAdminPlans'
 import { formatCents, formatDate, formatDateTime, toDateInputValue } from '../../lib/format'
@@ -48,6 +48,7 @@ export default function AdminRestaurantDetailPage() {
   const cancelSub         = useCancelSubscription()
   const updateDates       = useUpdateSubscriptionDates()
   const liberateSub       = useLiberateSubscription()
+  const adjustPendingBilling = useAdjustPendingBillingAmount()
 
   const [modal, setModal]           = useState(null) // 'edit' | 'block' | 'plan' | 'suspend' | 'cancel' | 'dates' | 'liberate' | null
   const [reason, setReason]         = useState('')
@@ -55,6 +56,7 @@ export default function AdminRestaurantDetailPage() {
   const [planForm, setPlanForm]     = useState({ planSlug: '', billingPeriod: 'monthly', adminNote: '', mpPaymentId: '' })
   const [datesForm, setDatesForm]   = useState({ currentPeriodEnd: '', trialEndsAt: '', billingDay: '' })
   const [liberateDays, setLiberateDays] = useState(30)
+  const [adjustAmountForm, setAdjustAmountForm] = useState({ amount: '', reason: '' })
   const [billingPage, setBillingPage] = useState(1)
 
   const billingHistoryQ = useRestaurantBillingHistory(canManageBilling ? id : null, { page: billingPage, limit: 10 })
@@ -166,6 +168,26 @@ export default function AdminRestaurantDetailPage() {
 
   const submitLiberate = async () => {
     await liberateSub.mutateAsync({ restaurantId: id, extraDays: Number(liberateDays), reason: reason || undefined })
+    closeModal()
+  }
+
+  const submitAdjustAmount = async (e) => {
+    e.preventDefault()
+    const reais = parseFloat(adjustAmountForm.amount.replace(',', '.'))
+    if (!reais || reais <= 0) {
+      toast.error('Informe um valor válido, maior que zero.')
+      return
+    }
+    if (adjustAmountForm.reason.trim().length < 5) {
+      toast.error('Informe o motivo do ajuste (mínimo 5 caracteres).')
+      return
+    }
+    await adjustPendingBilling.mutateAsync({
+      restaurantId: id,
+      newTotal: Math.round(reais * 100), // reais → centavos
+      reason: adjustAmountForm.reason.trim(),
+    })
+    setAdjustAmountForm({ amount: '', reason: '' })
     closeModal()
   }
 
@@ -291,6 +313,9 @@ export default function AdminRestaurantDetailPage() {
                 )}
                 <Button variant="ghost" onClick={openDatesModal}>
                   <CalendarClock size={15} /> Alterar vencimento
+                </Button>
+                <Button variant="ghost" onClick={() => setModal('adjust-amount')}>
+                  <Receipt size={15} /> Ajustar valor da cobrança
                 </Button>
                 <Button variant="ghost" onClick={() => setModal('liberate')}>
                   <Gift size={15} /> Liberar (sem cobrar)
@@ -571,6 +596,31 @@ export default function AdminRestaurantDetailPage() {
           />
           <Textarea label="Motivo (opcional)" value={reason} onChange={(e) => setReason(e.target.value)} />
           <Button type="submit" full loading={updateDates.isPending}>Salvar datas</Button>
+        </form>
+      </Modal>
+
+      {/* Modal: ajustar valor da cobrança pendente */}
+      <Modal open={modal === 'adjust-amount'} onClose={closeModal} title="Ajustar valor da cobrança pendente">
+        <form onSubmit={submitAdjustAmount} className="space-y-4">
+          <p className="text-sm text-gray-500">
+            Gera um Pix novo com o valor informado — o Pix anterior deixa de valer.
+            Útil pra testar o fluxo de pagamento sem precisar cobrar o valor cheio do plano.
+          </p>
+          <Input
+            label="Novo valor (R$)"
+            type="text"
+            inputMode="decimal"
+            placeholder="Ex: 1,00"
+            value={adjustAmountForm.amount}
+            onChange={(e) => setAdjustAmountForm({ ...adjustAmountForm, amount: e.target.value })}
+          />
+          <Textarea
+            label="Motivo do ajuste (obrigatório)"
+            placeholder="Ex: teste de pagamento antes de ir pra produção"
+            value={adjustAmountForm.reason}
+            onChange={(e) => setAdjustAmountForm({ ...adjustAmountForm, reason: e.target.value })}
+          />
+          <Button type="submit" full loading={adjustPendingBilling.isPending}>Gerar Pix com valor ajustado</Button>
         </form>
       </Modal>
 

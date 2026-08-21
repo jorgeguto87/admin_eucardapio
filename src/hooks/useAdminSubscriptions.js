@@ -95,6 +95,21 @@ export const useUpdateSubscriptionDates = () => {
 }
 
 /**
+ * Ajusta manualmente o VALOR de uma cobrança pendente — gera um Pix novo
+ * com o valor ajustado (o antigo deixa de valer). Útil pra testar o fluxo
+ * de pagamento sem cobrar o valor cheio do plano.
+ * PATCH /api/admin/subscriptions/:restaurantId/pending-billing
+ */
+export const useAdjustPendingBillingAmount = () => {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ restaurantId, ...payload }) => adminApi.patch(`/subscriptions/${restaurantId}/pending-billing`, payload),
+    onSuccess: (_, { restaurantId }) => { invalidate(qc, restaurantId); toast.success('Valor da cobrança ajustado! Pix novo gerado.') },
+    onError: (err) => toast.error(errMsg(err, 'Erro ao ajustar valor da cobrança')),
+  })
+}
+
+/**
  * Libera um cliente suspenso/vencido por N dias sem cobrar (estende currentPeriodEnd
  * e volta o status para "active").
  * POST /api/admin/subscriptions/:restaurantId/liberate

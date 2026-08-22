@@ -20,7 +20,7 @@ export default function AdminShell() {
           >
             <Menu size={20} />
           </button>
-          <span className="font-semibold text-sm text-secondary">Meu Chapa — Admin</span>
+          <span className="font-semibold text-sm text-secondary">Eu Cardápio — Admin</span>
         </div>
 
         <Outlet />

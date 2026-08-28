@@ -122,7 +122,7 @@ export default function AdminPlansPage() {
         ) : (
           <Card>
             {!betaPlan && (
-              <p className="text-sm text-gray-500 mb-4 bg-primary/5 rounded-xl p-3">
+              <p className="text-sm text-muted mb-4 bg-primary/5 rounded-xl p-3">
                 O plano Beta ainda não foi configurado — preencha os valores abaixo para criá-lo.
               </p>
             )}
@@ -130,8 +130,8 @@ export default function AdminPlansPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="label">Nome do plano</label>
-                <input className="input bg-gray-50 text-gray-400" value={BETA_NAME} disabled readOnly />
-                <p className="text-xs text-gray-400 mt-1">Fixo — só existe o plano Beta no momento.</p>
+                <input className="input bg-surface-subtle text-muted" value={BETA_NAME} disabled readOnly />
+                <p className="text-xs text-muted mt-1">Fixo — só existe o plano Beta no momento.</p>
               </div>
 
               <Textarea label="Descrição" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
@@ -145,10 +145,10 @@ export default function AdminPlansPage() {
                 <Input label="Desconto anual (%)" type="number" min={0} max={100} value={form.annualDiscountPercent} onChange={(e) => setForm({ ...form, annualDiscountPercent: e.target.value })} />
                 <div>
                   <label className="label">Preço anual (calculado)</label>
-                  <div className="input bg-gray-50 text-gray-500 flex items-center">
+                  <div className="input bg-surface-subtle text-muted flex items-center">
                     {formatCents(computeAnnualPriceCents(form.monthlyPrice, form.setupFee, form.annualDiscountPercent))}
                   </div>
-                  <p className="text-xs text-gray-400 mt-1">Adesão + 11 mensalidades, com o desconto acima.</p>
+                  <p className="text-xs text-muted mt-1">Adesão + 11 mensalidades, com o desconto acima.</p>
                 </div>
               </div>
 
@@ -173,7 +173,7 @@ export default function AdminPlansPage() {
         ) : (
           <ul className="space-y-2 text-sm">
             {Object.entries(statsQ.data || {}).length === 0 ? (
-              <p className="text-gray-400 text-sm">Nenhum assinante neste plano ainda.</p>
+              <p className="text-muted text-sm">Nenhum assinante neste plano ainda.</p>
             ) : (
               Object.entries(statsQ.data).map(([status, count]) => (
                 <li key={status} className="flex items-center justify-between">

@@ -7,7 +7,7 @@ export default function ConfirmModal({
 }) {
   return (
     <Modal open={open} onClose={onClose} title={title} width="max-w-sm">
-      {description && <div className="text-sm text-gray-500 mb-5">{description}</div>}
+      {description && <div className="text-sm text-muted mb-5">{description}</div>}
       <div className="flex gap-2">
         <Button variant="ghost" full onClick={onClose} disabled={loading}>Cancelar</Button>
         <Button variant={variant} full onClick={onConfirm} loading={loading}>{confirmLabel}</Button>

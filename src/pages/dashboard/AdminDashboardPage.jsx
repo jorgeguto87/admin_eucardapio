@@ -81,12 +81,12 @@ export default function AdminDashboardPage() {
   const maxRevenue = Math.max(1, ...monthlyRevenue.map((m) => m.revenue))
 
   const restaurantMetrics = [
-    { label: 'Restaurantes cadastrados', value: totals.restaurants ?? '—', icon: Store, color: 'text-secondary' },
+    { label: 'Restaurantes cadastrados', value: totals.restaurants ?? '—', icon: Store, color: 'text-ink' },
     { label: 'Restaurantes ativos',      value: totals.active ?? '—',      icon: TrendingUp, color: 'text-success' },
     { label: 'Em trial',                 value: totals.trial ?? '—',       icon: Clock, color: 'text-blue-600' },
     { label: 'Suspensos',                value: totals.suspended ?? '—',   icon: AlertTriangle, color: 'text-warning' },
     { label: 'Bloqueados',               value: blockedQ.data?.pagination?.total ?? '—', icon: Lock, color: 'text-danger', hint: 'isActive = false' },
-    { label: 'Cancelados',               value: totals.cancelled ?? '—',   icon: XCircle, color: 'text-gray-400' },
+    { label: 'Cancelados',               value: totals.cancelled ?? '—',   icon: XCircle, color: 'text-muted' },
     { label: 'Vencidos (past due)',      value: totals.pastDue ?? '—',     icon: Ban, color: 'text-danger' },
     {
       label: 'Novos restaurantes (mês)',
@@ -119,14 +119,14 @@ export default function AdminDashboardPage() {
           <SkeletonCards count={8} />
         ) : (
           <>
-            <h2 className="text-xs font-semibold uppercase text-gray-400 mb-3">Restaurantes</h2>
+            <h2 className="text-xs font-semibold uppercase text-muted mb-3">Restaurantes</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {restaurantMetrics.map((m) => <StatCard key={m.label} {...m} />)}
             </div>
 
             {canViewBilling ? (
               <>
-                <h2 className="text-xs font-semibold uppercase text-gray-400 mb-3">Financeiro</h2>
+                <h2 className="text-xs font-semibold uppercase text-muted mb-3">Financeiro</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                   {financialMetrics.map((m) => <StatCard key={m.label} {...m} />)}
                 </div>
@@ -142,7 +142,7 @@ export default function AdminDashboardPage() {
                             style={{ height: `${Math.max(4, (m.revenue / maxRevenue) * 100)}%` }}
                             title={formatCents(m.revenue)}
                           />
-                          <span className="text-[10px] text-gray-400">{m._id.month}/{String(m._id.year).slice(2)}</span>
+                          <span className="text-[10px] text-muted">{m._id.month}/{String(m._id.year).slice(2)}</span>
                         </div>
                       ))}
                     </div>
@@ -150,7 +150,7 @@ export default function AdminDashboardPage() {
                 )}
               </>
             ) : (
-              <p className="text-xs text-gray-400 mb-8">
+              <p className="text-xs text-muted mb-8">
                 Indicadores financeiros ocultos — sua conta não possui a permissão <code>manageBilling</code>.
               </p>
             )}
@@ -174,7 +174,7 @@ export default function AdminDashboardPage() {
                         <tr key={r._id} className="cursor-pointer hover:bg-bg/50" onClick={() => navigate(`/restaurants/${r._id}`)}>
                           <td className="table-td font-medium">{r.name}</td>
                           <td className="table-td"><Badge status={r.subscription?.status} /></td>
-                          <td className="table-td text-gray-400">{formatDate(r.createdAt)}</td>
+                          <td className="table-td text-muted">{formatDate(r.createdAt)}</td>
                         </tr>
                       ))}
                     </tbody>

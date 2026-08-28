@@ -1,10 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Temas — variáveis CSS (canais RGB separados, formato exigido pelo
+   Tailwind pra suportar opacidade tipo "primary/30"), trocadas em tempo
+   real via [data-theme] no <html>, sem precisar recompilar nada. ── */
+
+:root {
+  --color-primary:        255 107 44;
+  --color-primary-light:  255 140 90;
+  --color-primary-dark:   224 85 32;
+  --color-secondary:      26 26 46;
+  --color-secondary-light:45 45 78;
+  --color-success:        34 197 94;
+  --color-warning:        245 158 11;
+  --color-danger:         239 68 68;
+  --color-surface:        255 255 255;
+  --color-surface-hover:  243 244 246;
+  --color-surface-subtle: 249 250 251;
+  --color-bg:             244 245 247;
+  --color-ink:            26 26 46;
+  --color-muted:          156 163 175;
+  --color-muted-border:   243 244 246;
+  --radius-xl:  12px;
+  --radius-2xl: 16px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-amber-glow: none;
+}
+
+[data-theme='dark'] {
+  --color-primary:        242 138 46;
+  --color-primary-light:  255 178 92;
+  --color-primary-dark:   191 91 24;
+  --color-secondary:      21 25 27;
+  --color-secondary-light:37 44 47;
+  --color-success:        141 163 90;
+  --color-warning:        224 168 59;
+  --color-danger:         201 80 61;
+  --color-surface:        37 42 45;
+  --color-surface-hover:  45 53 56;
+  --color-surface-subtle: 26 30 32;
+  --color-bg:             17 21 22;
+  --color-ink:            217 211 195;
+  --color-muted:          138 150 154;
+  --color-muted-border:   57 66 70;
+  --radius-xl:  4px;
+  --radius-2xl: 6px;
+  --shadow-card: inset 0 1px rgba(255,255,255,.06), 0 8px 24px rgba(0,0,0,.28);
+  --shadow-amber-glow: 0 0 18px rgba(242,138,46,.22);
+}
+
+/* Evita "flash" de tema errado na primeira pintura da tela */
+html { background-color: rgb(var(--color-bg)); }
+
 @layer base {
-  body { @apply bg-bg text-secondary font-sans; }
+  body { @apply bg-bg text-ink font-sans; }
 }
 
 @layer components {
@@ -19,23 +70,23 @@
            hover:bg-secondary-light transition-colors disabled:opacity-50;
   }
   .btn-ghost {
-    @apply text-secondary font-medium rounded-xl h-10
+    @apply text-ink font-medium rounded-xl h-10
            px-4 flex items-center justify-center gap-2
-           hover:bg-gray-100 transition-colors;
+           hover:bg-surface-hover transition-colors;
   }
   .btn-danger {
     @apply bg-danger text-white font-semibold rounded-xl h-10
            px-5 flex items-center justify-center gap-2
            hover:opacity-90 transition-colors disabled:opacity-50;
   }
-  .card { @apply bg-surface rounded-2xl shadow-card p-5 border border-gray-100; }
+  .card { @apply bg-surface rounded-2xl shadow-card p-5 border border-muted-border; }
   .input {
-    @apply w-full border border-gray-200 rounded-xl px-4 h-10
-           text-secondary placeholder-gray-400 bg-surface
+    @apply w-full border border-muted-border rounded-xl px-4 h-10
+           text-ink placeholder-muted bg-surface
            focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
            transition-colors;
   }
-  .label { @apply block text-sm font-medium text-secondary mb-1; }
-  .table-th { @apply text-left text-xs font-semibold text-gray-400 uppercase tracking-wide px-4 py-3; }
-  .table-td { @apply px-4 py-3 text-sm border-t border-gray-100; }
+  .label { @apply block text-sm font-medium text-ink mb-1; }
+  .table-th { @apply text-left text-xs font-semibold text-muted uppercase tracking-wide px-4 py-3; }
+  .table-td { @apply px-4 py-3 text-sm border-t border-muted-border; }
 }

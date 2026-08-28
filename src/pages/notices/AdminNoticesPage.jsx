@@ -126,20 +126,20 @@ export default function AdminNoticesPage() {
                       <div className="flex items-center flex-wrap gap-2 mb-1">
                         <Badge status={notice.type} />
                         {!notice.isActive && <Badge status="blocked" label="Inativo" />}
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-muted">
                           {notice.target === 'all' ? 'Todos os restaurantes'
                             : notice.target === 'plan' ? `Plano: ${notice.plan}`
                             : `Restaurante: ${notice.restaurantId?.name || notice.restaurantId}`}
                         </span>
                       </div>
                       <p className="font-semibold text-sm">{notice.title}</p>
-                      <p className="text-sm text-gray-500 mt-1">{notice.message}</p>
+                      <p className="text-sm text-muted mt-1">{notice.message}</p>
                     </div>
                     <div className="flex gap-1 flex-shrink-0">
-                      <button onClick={() => openEdit(notice)} className="p-2 rounded-xl hover:bg-gray-100">
-                        <Pencil size={15} className="text-gray-400" />
+                      <button onClick={() => openEdit(notice)} className="p-2 rounded-xl hover:bg-surface-hover">
+                        <Pencil size={15} className="text-muted" />
                       </button>
-                      <button onClick={() => setConfirmDelete(notice)} className="p-2 rounded-xl hover:bg-gray-100">
+                      <button onClick={() => setConfirmDelete(notice)} className="p-2 rounded-xl hover:bg-surface-hover">
                         <Trash2 size={15} className="text-danger" />
                       </button>
                     </div>
@@ -186,7 +186,7 @@ export default function AdminNoticesPage() {
             <Input label="Expira em (opcional)" type="datetime-local" value={form.expiresAt} onChange={(e) => setForm({ ...form, expiresAt: e.target.value })} />
           </div>
 
-          <label className="flex items-center gap-2 text-sm text-gray-600">
+          <label className="flex items-center gap-2 text-sm text-muted">
             <input type="checkbox" checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} />
             Ativo (visível para os restaurantes)
           </label>

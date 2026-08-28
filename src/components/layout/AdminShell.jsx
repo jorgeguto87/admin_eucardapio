@@ -12,15 +12,15 @@ export default function AdminShell() {
 
       <main className="flex-1 min-w-0">
         {/* Barra mobile com botão de menu — some em telas grandes (lg:) */}
-        <div className="flex items-center gap-3 h-14 px-4 border-b border-gray-100 bg-surface lg:hidden">
+        <div className="flex items-center gap-3 h-14 px-4 border-b border-muted-border bg-surface lg:hidden">
           <button
             onClick={() => setMobileNavOpen(true)}
-            className="p-2 rounded-xl hover:bg-gray-100 text-secondary"
+            className="p-2 rounded-xl hover:bg-surface-hover text-ink"
             aria-label="Abrir menu"
           >
             <Menu size={20} />
           </button>
-          <span className="font-semibold text-sm text-secondary">Eu Cardápio — Admin</span>
+          <span className="font-semibold text-sm text-ink">Eu Cardápio — Admin</span>
         </div>
 
         <Outlet />

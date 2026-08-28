@@ -1,12 +1,12 @@
 export function SkeletonLine({ className = '' }) {
-  return <div className={`animate-pulse bg-gray-100 rounded-lg ${className}`} />
+  return <div className={`animate-pulse bg-surface-hover rounded-lg ${className}`} />
 }
 
 export function SkeletonTable({ rows = 6, cols = 4 }) {
   return (
     <div className="w-full">
       {Array.from({ length: rows }).map((_, r) => (
-        <div key={r} className="flex gap-4 px-4 py-3 border-t border-gray-100 first:border-t-0">
+        <div key={r} className="flex gap-4 px-4 py-3 border-t border-muted-border first:border-t-0">
           {Array.from({ length: cols }).map((_, c) => (
             <SkeletonLine key={c} className="h-4 flex-1" />
           ))}

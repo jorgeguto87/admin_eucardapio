@@ -67,7 +67,7 @@ function AdminFormModal({ open, onClose, admin }) {
         )}
 
         <div>
-          <h3 className="text-xs font-semibold uppercase text-gray-400 mb-2">Permissões (abas liberadas)</h3>
+          <h3 className="text-xs font-semibold uppercase text-muted mb-2">Permissões (abas liberadas)</h3>
           <div className="space-y-2">
             {Object.entries(PERMISSION_LABELS).map(([key, label]) => (
               <label key={key} className="flex items-center gap-2 text-sm cursor-pointer">
@@ -155,9 +155,9 @@ export default function AdminAdminsPage() {
                   <div className="min-w-0">
                     <p className="font-semibold text-sm truncate">
                       {admin.name}
-                      {admin._id === currentUser?.id && <span className="text-gray-400 font-normal"> (você)</span>}
+                      {admin._id === currentUser?.id && <span className="text-muted font-normal"> (você)</span>}
                     </p>
-                    <p className="text-xs text-gray-400 truncate">{admin.email}</p>
+                    <p className="text-xs text-muted truncate">{admin.email}</p>
                     <div className="flex flex-wrap gap-1 mt-1.5">
                       {Object.entries(PERMISSION_LABELS)
                         .filter(([key]) => admin.permissions?.[key])
@@ -176,23 +176,23 @@ export default function AdminAdminsPage() {
                 <div className="flex gap-1 flex-shrink-0">
                   <button
                     onClick={() => setFormModal(admin)}
-                    className="p-2 rounded-lg hover:bg-gray-100"
+                    className="p-2 rounded-lg hover:bg-surface-hover"
                     title="Editar"
                   >
-                    <Pencil size={15} className="text-gray-400" />
+                    <Pencil size={15} className="text-muted" />
                   </button>
                   <button
                     onClick={() => setPasswordModal(admin)}
-                    className="p-2 rounded-lg hover:bg-gray-100"
+                    className="p-2 rounded-lg hover:bg-surface-hover"
                     title="Redefinir senha"
                   >
-                    <KeyRound size={15} className="text-gray-400" />
+                    <KeyRound size={15} className="text-muted" />
                   </button>
                 </div>
               </div>
 
               {admin._id !== currentUser?.id && (
-                <div className="mt-3 pt-3 border-t border-gray-50">
+                <div className="mt-3 pt-3 border-t border-muted-border">
                   <Button
                     variant="ghost"
                     className={`!min-h-0 !h-8 !px-3 text-xs ${admin.isActive ? 'text-danger' : 'text-success'}`}

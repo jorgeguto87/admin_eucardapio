@@ -7,7 +7,7 @@ export default function ErrorState({ message = 'Não foi possível carregar os d
       <div className="w-12 h-12 rounded-2xl bg-danger/10 flex items-center justify-center mb-3">
         <AlertTriangle size={20} className="text-danger" />
       </div>
-      <p className="font-medium text-secondary text-sm">{message}</p>
+      <p className="font-medium text-ink text-sm">{message}</p>
       {onRetry && (
         <Button variant="ghost" className="mt-4" onClick={onRetry}>
           <RotateCw size={15} />

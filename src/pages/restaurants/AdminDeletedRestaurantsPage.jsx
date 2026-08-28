@@ -49,30 +49,30 @@ export default function AdminDeletedRestaurantsPage() {
               <Card key={d._id}>
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <p className="font-semibold text-secondary">{d.name || '(sem nome)'}</p>
-                    <p className="text-xs text-gray-400">{d.email}{d.phone ? ` · ${d.phone}` : ''}</p>
+                    <p className="font-semibold text-ink">{d.name || '(sem nome)'}</p>
+                    <p className="text-xs text-muted">{d.email}{d.phone ? ` · ${d.phone}` : ''}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-400">Excluído em</p>
+                    <p className="text-xs text-muted">Excluído em</p>
                     <p className="text-sm font-medium">{formatDateTime(d.deletedAt)}</p>
                   </div>
                 </div>
 
-                <div className="text-xs text-gray-500 bg-bg rounded-lg p-2 mb-3">
+                <div className="text-xs text-muted bg-bg rounded-lg p-2 mb-3">
                   <span className="font-medium">Por:</span> {d.deletedBy || '—'}
                   {d.reason && <> · <span className="font-medium">Motivo:</span> {d.reason}</>}
                 </div>
 
-                <p className="text-xs font-semibold text-gray-500 mb-2">Histórico de cobranças</p>
+                <p className="text-xs font-semibold text-muted mb-2">Histórico de cobranças</p>
                 {!d.billingHistory || d.billingHistory.length === 0 ? (
-                  <p className="text-xs text-gray-400 py-2">Nenhuma cobrança registrada.</p>
+                  <p className="text-xs text-muted py-2">Nenhuma cobrança registrada.</p>
                 ) : (
                   <div className="space-y-1.5">
                     {d.billingHistory.map((b) => (
-                      <div key={b._id} className="flex items-center justify-between py-1.5 border-b border-gray-50 last:border-0">
+                      <div key={b._id} className="flex items-center justify-between py-1.5 border-b border-muted-border last:border-0">
                         <div>
                           <p className="text-sm font-medium">{formatCents(b.total)}</p>
-                          <p className="text-xs text-gray-400">{formatDateTime(b.createdAt)} · {b.snapshot?.planName || '—'}</p>
+                          <p className="text-xs text-muted">{formatDateTime(b.createdAt)} · {b.snapshot?.planName || '—'}</p>
                         </div>
                         <Badge status={b.status} label={BILLING_STATUS_LABELS[b.status] || b.status} />
                       </div>

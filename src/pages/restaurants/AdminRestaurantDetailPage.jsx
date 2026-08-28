@@ -213,25 +213,25 @@ export default function AdminRestaurantDetailPage() {
           <Card>
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-sm">Informações</h3>
-              <button onClick={openEdit} className="p-2 rounded-xl hover:bg-gray-100" title="Editar">
-                <Pencil size={15} className="text-gray-400" />
+              <button onClick={openEdit} className="p-2 rounded-xl hover:bg-surface-hover" title="Editar">
+                <Pencil size={15} className="text-muted" />
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <div className="flex items-center gap-2 text-gray-500">
+              <div className="flex items-center gap-2 text-muted">
                 <Phone size={14} /> {restaurant.phone || '—'}
               </div>
-              <div className="text-gray-500">Documento: {restaurant.document || '—'}</div>
-              <div className="flex items-center gap-2 text-gray-500 sm:col-span-2">
+              <div className="text-muted">Documento: {restaurant.document || '—'}</div>
+              <div className="flex items-center gap-2 text-muted sm:col-span-2">
                 <MapPin size={14} />
                 {restaurant.address?.street
                   ? `${restaurant.address.street}, ${restaurant.address.number || 's/n'} — ${restaurant.address.city || ''}`
                   : '—'}
               </div>
-              <div className="flex items-center gap-2 text-gray-500">
+              <div className="flex items-center gap-2 text-muted">
                 <Calendar size={14} /> Desde {formatDate(restaurant.createdAt)}
               </div>
-              <div className="text-gray-500">Slug: {restaurant.slug || '—'}</div>
+              <div className="text-muted">Slug: {restaurant.slug || '—'}</div>
             </div>
           </Card>
 
@@ -243,44 +243,44 @@ export default function AdminRestaurantDetailPage() {
             </div>
             <div className="space-y-2 text-sm mb-4">
               <div className="flex justify-between">
-                <span className="text-gray-500">Plano</span>
+                <span className="text-muted">Plano</span>
                 <span className="font-medium">{subscription?.planId?.name || subscription?.planSlug || restaurant.subscription?.plan || '—'}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Período</span>
+                <span className="text-muted">Período</span>
                 <span className="font-medium capitalize">{subscription?.billingPeriod || '—'}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500">Valor vigente</span>
+                <span className="text-muted">Valor vigente</span>
                 <span className="font-medium">{formatCents(subscription?.currentPrice ?? restaurant.subscription?.price ?? 0)}</span>
               </div>
               {subscription?.trialEndsAt && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Fim do trial</span>
+                  <span className="text-muted">Fim do trial</span>
                   <span className="font-medium">{formatDate(subscription.trialEndsAt)}</span>
                 </div>
               )}
               {subscription?.currentPeriodEnd && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Próxima cobrança / vencimento</span>
+                  <span className="text-muted">Próxima cobrança / vencimento</span>
                   <span className="font-medium">{formatDate(subscription.currentPeriodEnd)}</span>
                 </div>
               )}
               {subscription?.billingDay && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Dia fixo de vencimento</span>
+                  <span className="text-muted">Dia fixo de vencimento</span>
                   <span className="font-medium">Todo dia {subscription.billingDay}</span>
                 </div>
               )}
               {subscription?.canAnticipateFirstPayment && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Antecipação disponível</span>
+                  <span className="text-muted">Antecipação disponível</span>
                   <span className="font-medium text-warning">Sim (restaurante pode pagar antes)</span>
                 </div>
               )}
               {subscription?.scheduledDeletionAt && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Exclusão automática em</span>
+                  <span className="text-muted">Exclusão automática em</span>
                   <span className="font-medium text-danger">{formatDate(subscription.scheduledDeletionAt)}</span>
                 </div>
               )}
@@ -330,12 +330,12 @@ export default function AdminRestaurantDetailPage() {
               <h3 className="font-semibold text-sm mb-4">Histórico da assinatura</h3>
               <div className="space-y-3">
                 {[...subscription.statusHistory].reverse().slice(0, 10).map((h) => (
-                  <div key={h._id} className="text-sm border-l-2 border-gray-100 pl-3">
+                  <div key={h._id} className="text-sm border-l-2 border-muted-border pl-3">
                     <p className="font-medium">
                       {h.from ? <>{h.from} → {h.to}</> : <>Criado como {h.to}</>}
                     </p>
-                    {h.reason && <p className="text-gray-400 text-xs">{h.reason}</p>}
-                    <p className="text-gray-300 text-[11px]">{formatDateTime(h.changedAt)} · {h.changedBy}</p>
+                    {h.reason && <p className="text-muted text-xs">{h.reason}</p>}
+                    <p className="text-muted text-[11px]">{formatDateTime(h.changedAt)} · {h.changedBy}</p>
                   </div>
                 ))}
               </div>
@@ -370,7 +370,7 @@ export default function AdminRestaurantDetailPage() {
                             <td className="table-td capitalize">{b.type}</td>
                             <td className="table-td font-medium">{formatCents(b.total)}</td>
                             <td className="table-td"><Badge status={b.status} /></td>
-                            <td className="table-td text-gray-400">{formatDate(b.dueDate)}</td>
+                            <td className="table-td text-muted">{formatDate(b.dueDate)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -386,7 +386,7 @@ export default function AdminRestaurantDetailPage() {
         <div className="space-y-4">
           <Card>
             <h3 className="font-semibold text-sm mb-3">Controle manual de acesso</h3>
-            <p className="text-xs text-gray-400 mb-4">
+            <p className="text-xs text-muted mb-4">
               Bloquear ou liberar acesso independente do status de pagamento.
             </p>
             <div className="mb-3"><Badge status={isBlocked ? 'blocked' : 'unblocked'} /></div>
@@ -406,23 +406,23 @@ export default function AdminRestaurantDetailPage() {
               <UsersIcon size={15} /> Usuários ({users.length})
             </h3>
             {users.length === 0 ? (
-              <p className="text-xs text-gray-400">Nenhum usuário cadastrado.</p>
+              <p className="text-xs text-muted">Nenhum usuário cadastrado.</p>
             ) : (
               <ul className="space-y-2 text-sm">
                 {users.map((u) => (
                   <li key={u._id} className="flex items-center justify-between">
                     <div className="min-w-0">
                       <p className="font-medium truncate">{u.name}{u.isOwner ? ' 👑' : ''}</p>
-                      <p className="text-gray-400 text-xs truncate">{u.email}</p>
+                      <p className="text-muted text-xs truncate">{u.email}</p>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <Badge status={u.isActive ? 'unblocked' : 'blocked'} label={u.isActive ? 'Ativo' : 'Inativo'} />
                       <button
                         onClick={() => { setEditUserForm({ name: u.name, email: u.email }); setEditUserModal(u) }}
-                        className="p-1.5 rounded-lg hover:bg-gray-100"
+                        className="p-1.5 rounded-lg hover:bg-surface-hover"
                         title="Editar nome/e-mail"
                       >
-                        <Pencil size={14} className="text-gray-500" />
+                        <Pencil size={14} className="text-muted" />
                       </button>
                     </div>
                   </li>
@@ -514,7 +514,7 @@ export default function AdminRestaurantDetailPage() {
             <p className="text-sm text-danger font-medium">
               Isso apaga o restaurante, cardápio, pedidos, clientes, conexão WhatsApp e usuários — sem volta.
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted">
               O histórico de cobranças continua disponível na aba "Restaurantes excluídos", pra fins fiscais.
             </p>
             <Textarea label="Motivo (opcional)" value={reason} onChange={(e) => setReason(e.target.value)} />
@@ -534,9 +534,9 @@ export default function AdminRestaurantDetailPage() {
             <option value="annual">Anual</option>
           </Select>
 
-          <div className="border-t border-gray-100 pt-4">
+          <div className="border-t border-muted-border pt-4">
             <p className="text-sm font-semibold mb-1">1. Emitir cobrança (fluxo normal)</p>
-            <p className="text-xs text-gray-400 mb-3">
+            <p className="text-xs text-muted mb-3">
               Gera um Pix de verdade na conta MP da plataforma. O restaurante fica em <strong>"Vencido"</strong> até
               o pagamento ser confirmado (pelo webhook do MP, ou manualmente abaixo).
             </p>
@@ -545,9 +545,9 @@ export default function AdminRestaurantDetailPage() {
             </Button>
           </div>
 
-          <div className="border-t border-gray-100 pt-4">
+          <div className="border-t border-muted-border pt-4">
             <p className="text-sm font-semibold mb-1">2. Confirmar pagamento recebido (exceção)</p>
-            <p className="text-xs text-gray-400 mb-3">
+            <p className="text-xs text-muted mb-3">
               Use <strong>só</strong> se o pagamento já aconteceu de fato (fora do sistema, ou você tem o ID do
               pagamento no MP). Isso ativa a assinatura na hora — não emite Pix nenhum.
             </p>
@@ -602,7 +602,7 @@ export default function AdminRestaurantDetailPage() {
       {/* Modal: ajustar valor da cobrança pendente */}
       <Modal open={modal === 'adjust-amount'} onClose={closeModal} title="Ajustar valor da cobrança pendente">
         <form onSubmit={submitAdjustAmount} className="space-y-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted">
             Gera um Pix novo com o valor informado — o Pix anterior deixa de valer.
             Útil pra testar o fluxo de pagamento sem precisar cobrar o valor cheio do plano.
           </p>
@@ -636,7 +636,7 @@ export default function AdminRestaurantDetailPage() {
             onChange={(e) => setLiberateDays(e.target.value)}
           />
           <Textarea label="Motivo (opcional)" value={reason} onChange={(e) => setReason(e.target.value)} />
-          <p className="text-xs text-gray-400">Estende o vencimento atual pelo número de dias informado e reativa a assinatura sem gerar cobrança.</p>
+          <p className="text-xs text-muted">Estende o vencimento atual pelo número de dias informado e reativa a assinatura sem gerar cobrança.</p>
           <Button full onClick={submitLiberate} loading={liberateSub.isPending}>Confirmar liberação</Button>
         </div>
       </Modal>
@@ -650,7 +650,7 @@ export default function AdminRestaurantDetailPage() {
           }}
           className="space-y-4"
         >
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-muted">
             Uso pra suporte/recuperação de acesso — não exige a senha do usuário.
           </p>
           <Input label="Nome" value={editUserForm.name} onChange={(e) => setEditUserForm({ ...editUserForm, name: e.target.value })} required />

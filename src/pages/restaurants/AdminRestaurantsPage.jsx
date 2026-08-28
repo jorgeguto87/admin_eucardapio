@@ -63,8 +63,8 @@ function NewRestaurantModal({ open, onClose }) {
         <Input label="Telefone" value={form.phone} onChange={set('phone')} placeholder="(21) 99999-9999" />
         <Input label="CNPJ/CPF (opcional)" value={form.document} onChange={set('document')} />
 
-        <div className="border-t border-gray-100 pt-4">
-          <h3 className="text-xs font-semibold uppercase text-gray-400 mb-2">Login do restaurante</h3>
+        <div className="border-t border-muted-border pt-4">
+          <h3 className="text-xs font-semibold uppercase text-muted mb-2">Login do restaurante</h3>
           <div className="space-y-3">
             <Input label="Nome do responsável" value={form.adminName} onChange={set('adminName')} required minLength={2} />
             <Input label="E-mail de login" type="email" value={form.adminEmail} onChange={set('adminEmail')} required />
@@ -89,7 +89,7 @@ function NewRestaurantModal({ open, onClose }) {
           />
           <span>
             <span className="block font-medium">Já ativar no plano Beta</span>
-            <span className="block text-xs text-gray-400">Pula o período de trial — o restaurante já entra ativo, sem cobrança de adesão.</span>
+            <span className="block text-xs text-muted">Pula o período de trial — o restaurante já entra ativo, sem cobrança de adesão.</span>
           </span>
         </label>
 
@@ -137,7 +137,7 @@ export default function AdminRestaurantsPage() {
       <div className="p-4 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
           <div className="relative flex-1 sm:max-w-xs">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
             <input
               className="input pl-9"
               placeholder="Buscar por nome, slug, documento..."
@@ -188,11 +188,11 @@ export default function AdminRestaurantsPage() {
                         onClick={() => navigate(`/restaurants/${r._id}`)}
                       >
                         <td className="table-td font-medium">{r.name}</td>
-                        <td className="table-td text-gray-500 capitalize">{r.subscription?.plan}</td>
+                        <td className="table-td text-muted capitalize">{r.subscription?.plan}</td>
                         <td className="table-td"><Badge status={r.subscription?.status} /></td>
                         <td className="table-td"><Badge status={r.isActive ? 'unblocked' : 'blocked'} /></td>
-                        <td className="table-td text-gray-500">{r.phone || '—'}</td>
-                        <td className="table-td text-gray-400">{formatDate(r.createdAt)}</td>
+                        <td className="table-td text-muted">{r.phone || '—'}</td>
+                        <td className="table-td text-muted">{formatDate(r.createdAt)}</td>
                       </tr>
                     ))}
                   </tbody>

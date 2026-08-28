@@ -138,13 +138,13 @@ export default function AdminBillingPage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4">
               <StatCard label="Receita total (paga)" value={formatCents(total.totalRevenue)} icon={Wallet} color="text-success" />
               <StatCard label="Faturamento do mês" value={formatCents(currentMonth.revenue)} icon={Calendar} color="text-primary" hint={`${currentMonth.count} cobrança(s)`} />
-              <StatCard label="Ticket médio" value={formatCents(total.avgTicket)} icon={TrendingUp} color="text-secondary" />
+              <StatCard label="Ticket médio" value={formatCents(total.avgTicket)} icon={TrendingUp} color="text-ink" />
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6">
               <StatCard label="Receita de mensalidades" value={formatCents(byType.subscription?.revenue)} icon={Repeat} color="text-blue-600" hint={`${byType.subscription?.count ?? 0} cobrança(s)`} />
               <StatCard label="Receita de adesão" value={formatCents(byType.setupFee?.revenue)} icon={Award} color="text-orange-500" hint={`${byType.setupFee?.count ?? 0} cobrança(s)`} />
-              <StatCard label="Cobranças pagas" value={total.count ?? 0} icon={Receipt} color="text-gray-500" />
+              <StatCard label="Cobranças pagas" value={total.count ?? 0} icon={Receipt} color="text-muted" />
             </div>
 
             {byPlan.length > 0 && (
@@ -153,7 +153,7 @@ export default function AdminBillingPage() {
                 <div className="space-y-2">
                   {byPlan.map((p) => (
                     <div key={p._id} className="flex items-center justify-between text-sm">
-                      <span className="capitalize text-gray-500">{p._id}</span>
+                      <span className="capitalize text-muted">{p._id}</span>
                       <span className="font-medium">{formatCents(p.revenue)} · {p.count} cobranças</span>
                     </div>
                   ))}
@@ -163,7 +163,7 @@ export default function AdminBillingPage() {
           </>
         )}
 
-        <h3 className="font-semibold text-sm text-secondary mb-3">Histórico de pagamentos</h3>
+        <h3 className="font-semibold text-sm text-ink mb-3">Histórico de pagamentos</h3>
         <div className="flex flex-wrap gap-2 mb-4">
           <Select value={filters.status} onChange={(e) => updateFilter('status', e.target.value)} className="w-auto">
             {STATUS_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -205,19 +205,19 @@ export default function AdminBillingPage() {
                     {billings.map((b) => (
                       <tr key={b._id}>
                         <td className="table-td font-medium">{b.restaurantId?.name || '—'}</td>
-                        <td className="table-td capitalize text-gray-500">{b.type}</td>
+                        <td className="table-td capitalize text-muted">{b.type}</td>
                         <td className="table-td font-medium">{formatCents(b.total)}</td>
                         <td className="table-td"><Badge status={b.status} /></td>
-                        <td className="table-td text-gray-400">{formatDate(b.dueDate)}</td>
+                        <td className="table-td text-muted">{formatDate(b.dueDate)}</td>
                         <td className="table-td">
                           <div className="flex gap-1">
                             {b.status === 'pending' && (
-                              <button title="Marcar como paga" onClick={() => setPayModal(b)} className="p-1.5 rounded-lg hover:bg-gray-100">
+                              <button title="Marcar como paga" onClick={() => setPayModal(b)} className="p-1.5 rounded-lg hover:bg-surface-hover">
                                 <CheckCircle2 size={15} className="text-success" />
                               </button>
                             )}
                             {b.status === 'paid' && (
-                              <button title="Estornar" onClick={() => setRefundModal(b)} className="p-1.5 rounded-lg hover:bg-gray-100">
+                              <button title="Estornar" onClick={() => setRefundModal(b)} className="p-1.5 rounded-lg hover:bg-surface-hover">
                                 <RotateCcw size={15} className="text-danger" />
                               </button>
                             )}
@@ -230,24 +230,24 @@ export default function AdminBillingPage() {
               </div>
 
               {/* Mobile: lista de cards */}
-              <div className="sm:hidden divide-y divide-gray-100">
+              <div className="sm:hidden divide-y divide-muted-border">
                 {billings.map((b) => (
                   <div key={b._id} className="p-4">
                     <div className="flex items-center justify-between mb-1">
                       <p className="font-medium text-sm">{b.restaurantId?.name || '—'}</p>
                       <Badge status={b.status} />
                     </div>
-                    <p className="text-xs text-gray-400 capitalize mb-2">{b.type} · vence {formatDate(b.dueDate)}</p>
+                    <p className="text-xs text-muted capitalize mb-2">{b.type} · vence {formatDate(b.dueDate)}</p>
                     <div className="flex items-center justify-between">
                       <p className="font-semibold">{formatCents(b.total)}</p>
                       <div className="flex gap-1">
                         {b.status === 'pending' && (
-                          <button title="Marcar como paga" onClick={() => setPayModal(b)} className="p-1.5 rounded-lg hover:bg-gray-100">
+                          <button title="Marcar como paga" onClick={() => setPayModal(b)} className="p-1.5 rounded-lg hover:bg-surface-hover">
                             <CheckCircle2 size={15} className="text-success" />
                           </button>
                         )}
                         {b.status === 'paid' && (
-                          <button title="Estornar" onClick={() => setRefundModal(b)} className="p-1.5 rounded-lg hover:bg-gray-100">
+                          <button title="Estornar" onClick={() => setRefundModal(b)} className="p-1.5 rounded-lg hover:bg-surface-hover">
                             <RotateCcw size={15} className="text-danger" />
                           </button>
                         )}

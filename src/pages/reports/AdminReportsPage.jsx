@@ -14,9 +14,9 @@ const MONTH_ABBR = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set
 
 // Variação percentual entre dois valores, formatada com seta/cor.
 function ChangeBadge({ current, previous }) {
-  if (!previous) return <span className="text-xs text-gray-400">sem base de comparação</span>
+  if (!previous) return <span className="text-xs text-muted">sem base de comparação</span>
   const pct = Math.round(((current - previous) / previous) * 100)
-  if (pct === 0) return <span className="text-xs text-gray-400 flex items-center gap-1"><Minus size={12} /> igual ao período anterior</span>
+  if (pct === 0) return <span className="text-xs text-muted flex items-center gap-1"><Minus size={12} /> igual ao período anterior</span>
   const up = pct > 0
   const Icon = up ? TrendingUp : TrendingDown
   return (
@@ -82,11 +82,11 @@ export default function AdminReportsPage() {
 
       <div className="p-4 sm:p-8 space-y-8">
         <div>
-          <h2 className="text-xs font-semibold uppercase text-gray-400 mb-3">Aquisição</h2>
+          <h2 className="text-xs font-semibold uppercase text-muted mb-3">Aquisição</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             <StatCard label="Novos restaurantes (mês)" value={newThisMonth} icon={UserPlus} color="text-primary" hint={sampled ? 'estimado (amostra)' : undefined} />
             <StatCard label="Em trial" value={totals.trial ?? 0} icon={Clock} color="text-blue-600" />
-            <StatCard label="Cancelamentos" value={totals.cancelled ?? 0} icon={XCircle} color="text-gray-400" />
+            <StatCard label="Cancelamentos" value={totals.cancelled ?? 0} icon={XCircle} color="text-muted" />
             <StatCard
               label="Conversão trial → pago"
               value={conversionRate !== null ? `${conversionRate}%` : '—'}
@@ -99,27 +99,27 @@ export default function AdminReportsPage() {
 
         {canViewBilling ? (
           <div>
-            <h2 className="text-xs font-semibold uppercase text-gray-400 mb-3">Receita — comparativos</h2>
+            <h2 className="text-xs font-semibold uppercase text-muted mb-3">Receita — comparativos</h2>
             {billingSummaryQ.isLoading ? (
               <LoadingSpinner />
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                   <Card>
-                    <p className="text-xs text-gray-400 mb-1">Mês atual vs. mês anterior</p>
-                    <p className="text-xl font-bold text-secondary mb-1">{formatCents(currentMonth.revenue)}</p>
+                    <p className="text-xs text-muted mb-1">Mês atual vs. mês anterior</p>
+                    <p className="text-xl font-bold text-ink mb-1">{formatCents(currentMonth.revenue)}</p>
                     <ChangeBadge current={currentMonth.revenue} previous={lastMonthEntry?.revenue} />
                   </Card>
                   <Card>
-                    <p className="text-xs text-gray-400 mb-1">Ano atual vs. ano anterior</p>
-                    <p className="text-xl font-bold text-secondary mb-1">{formatCents(thisYearEntry?.revenue || 0)}</p>
+                    <p className="text-xs text-muted mb-1">Ano atual vs. ano anterior</p>
+                    <p className="text-xl font-bold text-ink mb-1">{formatCents(thisYearEntry?.revenue || 0)}</p>
                     <ChangeBadge current={thisYearEntry?.revenue || 0} previous={lastYearEntry?.revenue} />
                   </Card>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
                   <StatCard label="Receita total (histórico)" value={formatCents(total.totalRevenue)} icon={DollarSign} color="text-success" />
-                  <StatCard label="Cobranças pagas" value={total.count ?? 0} icon={DollarSign} color="text-secondary" />
+                  <StatCard label="Cobranças pagas" value={total.count ?? 0} icon={DollarSign} color="text-ink" />
                   <StatCard label="Ticket médio" value={formatCents(total.avgTicket)} icon={DollarSign} color="text-primary" />
                 </div>
 
@@ -146,7 +146,7 @@ export default function AdminReportsPage() {
                     <div className="space-y-2">
                       {yearlyRevenue.map((y) => (
                         <div key={y._id} className="flex items-center justify-between text-sm">
-                          <span className="text-gray-500">{y._id}</span>
+                          <span className="text-muted">{y._id}</span>
                           <span className="font-medium">{formatCents(y.revenue)} · {y.count} cobranças</span>
                         </div>
                       ))}
@@ -157,7 +157,7 @@ export default function AdminReportsPage() {
             )}
           </div>
         ) : (
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-muted">
             Indicadores de receita ocultos — sua conta não possui a permissão <code>manageBilling</code>.
           </p>
         )}

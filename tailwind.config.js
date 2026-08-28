@@ -1,21 +1,38 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
+  darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
-        primary:   { DEFAULT: '#FF6B2C', light: '#FF8C5A', dark: '#E05520' },
-        secondary: { DEFAULT: '#1A1A2E', light: '#2D2D4E' },
-        success:   '#22C55E',
-        warning:   '#F59E0B',
-        danger:    '#EF4444',
-        surface:   '#FFFFFF',
-        bg:        '#F4F5F7',
+        primary: {
+          DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
+          light:   'rgb(var(--color-primary-light) / <alpha-value>)',
+          dark:    'rgb(var(--color-primary-dark) / <alpha-value>)',
+        },
+        secondary: {
+          DEFAULT: 'rgb(var(--color-secondary) / <alpha-value>)',
+          light:   'rgb(var(--color-secondary-light) / <alpha-value>)',
+        },
+        success: 'rgb(var(--color-success) / <alpha-value>)',
+        warning: 'rgb(var(--color-warning) / <alpha-value>)',
+        danger:  'rgb(var(--color-danger) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        'surface-hover':  'rgb(var(--color-surface-hover) / <alpha-value>)',
+        'surface-subtle': 'rgb(var(--color-surface-subtle) / <alpha-value>)',
+        bg:    'rgb(var(--color-bg) / <alpha-value>)',
+        ink:   'rgb(var(--color-ink) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        'muted-border': 'rgb(var(--color-muted-border) / <alpha-value>)',
       },
-      fontFamily: { sans: ['Inter', 'sans-serif'] },
-      borderRadius: { xl: '12px', '2xl': '16px' },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      borderRadius: { xl: 'var(--radius-xl)', '2xl': 'var(--radius-2xl)' },
       boxShadow: {
-        card: '0 1px 3px rgba(0,0,0,0.06)',
+        card: 'var(--shadow-card)',
+        'amber-glow': 'var(--shadow-amber-glow)',
       },
     },
   },
